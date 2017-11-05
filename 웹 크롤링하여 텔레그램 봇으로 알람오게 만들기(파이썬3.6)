@@ -1,0 +1,25 @@
+from selenium import webdriver 
+import telegram
+
+#텔레그렘 봇의 API 키 가져옴 
+bot = telegram.Bot(token = '텔레그램 봇의 키 입력)
+chat_id = '알람 받을 채팅 id 입력' 
+driver = webdriver.Chrome('크롬드라이버의 경로입력')
+
+driver.implicitly_wait(3) #3초간 기다린다.
+
+#url접근 
+driver.get(' 파싱하고 싶은 웹 사이트 주소 입력')
+
+#아이디/비번 입력해줌 (로그인이 필요한 경우) 
+driver.find_element_by_name('아이디 엘레먼트 네임을 입력').send_keys('아이디 입력') 
+driver.find_element_by_name('비밀번호 엘레먼트 네임을 입력').send_keys('비번 입력') 
+#로그인버튼 클릭 
+driver.find_element_by_xpath('로그인버튼의 xpath입력').click()
+
+ex) 제목파싱하여 메시지 알람 
+# xpath 이용하여 제목 파싱 
+latest = driver.find_element_by_xpath('//*[@id="listView"]/div[1]/div[1]/a/h3').text.split('[')
+#인섭봇에게 메세지 보냄!! 
+bot.sendMessage(chat_id=chat_id, text='테스트 중') 
+bot.sendMessage(chat_id=chat_id, text='주제 : '+latest[0])
